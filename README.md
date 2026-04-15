@@ -132,6 +132,7 @@ Example training runs:
 
 ```bash
 python scripts/train.py --config configs/pointnet2_modelnet40_debug.yaml
+python scripts/train.py --config configs/pointnet2_modelnet40_fast.yaml
 python scripts/train.py --config configs/pointnet2_modelnet40_train.yaml
 ```
 
@@ -147,6 +148,8 @@ Note:
 
 - `configs/pointnet2_modelnet40_debug.yaml` is the explicit lightweight sanity-check config
 - it uses a small subset of `ModelNet40`, batch size `4`, and `1` epoch so the first real run stays fast
+- `configs/pointnet2_modelnet40_fast.yaml` is a full-split local-development baseline
+- it keeps the full `ModelNet40` train/test split, but reduces runtime with `512` points per shape and `25` epochs
 - `configs/pointnet2_modelnet40_train.yaml` is the real baseline training config for full-split experiments
 - `configs/pointnet2_modelnet40.yaml` remains as a backward-compatible alias of the debug setup
 
@@ -196,6 +199,7 @@ Available starter configs:
 
 - `configs/pointnet2_modelnet40.yaml`
 - `configs/pointnet2_modelnet40_debug.yaml`
+- `configs/pointnet2_modelnet40_fast.yaml`
 - `configs/pointnet2_modelnet40_train.yaml`
 - `configs/dgcnn_modelnet40.yaml`
 - `configs/improved_pointnet2_modelnet40.yaml`
