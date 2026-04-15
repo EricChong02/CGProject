@@ -6,8 +6,9 @@ This repository is intentionally scaffolded as an initial course-project codebas
 
 - The project structure is modular and ready to extend.
 - Dataset, model, training, evaluation, and visualization modules are wired together.
-- Current model and dataset implementations are placeholders with `TODO` markers.
-- Placeholder commands run without import errors and generate mock outputs so the workflow can be tested early.
+- The `ModelNet40` loader now supports the common h5 format used by PointNet-family projects.
+- A real `PointNet++` classification model is implemented for the current pipeline.
+- `DGCNN`, `ScanObjectNN`, and the improved `PointNet++` path are still placeholders with `TODO` markers.
 
 ## Project Structure
 
@@ -60,31 +61,94 @@ Expected dataset locations:
 - `datasets_processed/modelnet40/`
 - `datasets_processed/scanobjectnn/`
 
-Recommended next step:
+### ModelNet40 Folder Structure
 
-1. Download the official `ModelNet40` files into `datasets_raw/modelnet40/`.
-2. Download the official `ScanObjectNN` files into `datasets_raw/scanobjectnn/`.
-3. Implement the actual parsing and preprocessing logic in:
-   - `pointcloud_benchmark/datasets/modelnet40.py`
-   - `pointcloud_benchmark/datasets/scanobjectnn.py`
+The loader expects the common `modelnet40_ply_hdf5_2048` layout. The recommended directory tree is:
 
-Right now the dataset loaders fall back to synthetic samples so the pipeline can be smoke-tested before the real loaders are written.
+```text
+datasets_raw/
+└── modelnet40/
+    └── modelnet40_ply_hdf5_2048/
+        ├── shape_names.txt
+        ├── train_files.txt
+        ├── test_files.txt
+        ├── ply_data_train0.h5
+        ├── ply_data_train1.h5
+        ├── ply_data_train2.h5
+        ├── ply_data_train3.h5
+        ├── ply_data_train4.h5
+        ├── ply_data_test0.h5
+        └── ...
+```
+
+`root` in the config should usually remain:
+
+```yaml
+dataset:
+  root: datasets_raw/modelnet40
+```
+
+The loader will automatically detect the nested `modelnet40_ply_hdf5_2048/` directory. It also supports the case where the h5 files are placed directly inside `datasets_raw/modelnet40/`.
+
+### ModelNet40 Features
+
+- automatic `train` and `test` split discovery
+- configurable `num_points` sampling
+- zero-mean, unit-scale normalization
+- training-only augmentation:
+  - random point dropout
+  - random scaling
+  - random shifting
+  - gaussian jitter
+  - optional random rotation around the configured upright axis
+
+### Smoke Test
+
+To sanity-check the dataset pipeline after downloading ModelNet40:
+
+```bash
+python scripts/smoke_test_modelnet40.py --config configs/pointnet2_modelnet40_debug.yaml
+```
+
+This loads a small batch and prints the point tensor shape, label shape, and min/max values.
+
+### PointNet++ Forward Smoke Test
+
+To verify the PointNet++ classifier builds and runs a real forward pass:
+
+```bash
+python scripts/smoke_test_pointnet2.py --config configs/pointnet2_modelnet40_debug.yaml
+```
+
+This constructs the model and runs random input of shape `[B, N, 3]` through the network.
+
+### ScanObjectNN
+
+`ScanObjectNN` is not implemented yet and remains a placeholder.
 
 ## Training
 
-Example placeholder training runs:
+Example training runs:
 
 ```bash
-python scripts/train.py --config configs/pointnet2_modelnet40.yaml
-python scripts/train.py --config configs/dgcnn_scanobjectnn.yaml
+python scripts/train.py --config configs/pointnet2_modelnet40_debug.yaml
+python scripts/train.py --config configs/pointnet2_modelnet40_train.yaml
 ```
 
-What the placeholder trainer does today:
+What the current training pipeline does:
 
 - loads the YAML config
-- builds a placeholder dataset and model
-- runs a lightweight training loop
+- builds the configured dataset and model
+- runs classification training with cross-entropy loss
 - saves config snapshots, logs, checkpoints, and metrics
+- writes both `latest.pt` and `best.pt` checkpoints for supported runs
+
+Note:
+
+- `configs/pointnet2_modelnet40_debug.yaml` is the explicit lightweight sanity-check config
+- it uses a small subset of `ModelNet40`, batch size `4`, and `1` epoch so the first real run stays fast
+- `configs/pointnet2_modelnet40_train.yaml` is the real baseline training config for full-split experiments
+- `configs/pointnet2_modelnet40.yaml` remains as a backward-compatible alias of the debug setup
 
 Generated artifacts are written to:
 
@@ -98,25 +162,30 @@ Generated artifacts are written to:
 Run evaluation with a config:
 
 ```bash
-python scripts/evaluate.py --config configs/pointnet2_modelnet40.yaml
+python scripts/evaluate.py --config configs/pointnet2_modelnet40_debug.yaml
 ```
+
+If `--checkpoint` is omitted, the evaluator automatically looks for:
+
+- `checkpoints/<experiment_name>/best.pt`
+- `checkpoints/<experiment_name>/latest.pt`
 
 Optional checkpoint override:
 
 ```bash
 python scripts/evaluate.py \
-  --config configs/pointnet2_modelnet40.yaml \
-  --checkpoint checkpoints/pointnet2_modelnet40/latest.pt
+  --config configs/pointnet2_modelnet40_train.yaml \
+  --checkpoint checkpoints/pointnet2_modelnet40_train/latest.pt
 ```
 
-The current evaluator supports the pipeline and output format, but metrics are only meaningful once the real models and datasets are implemented.
+The current evaluator works with the real `PointNet++` + `ModelNet40` path. Metrics for other placeholder model paths are not meaningful yet.
 
 ## Visualization
 
 Generate a training-curve figure:
 
 ```bash
-python scripts/visualize.py --config configs/pointnet2_modelnet40.yaml
+python scripts/visualize.py --config configs/pointnet2_modelnet40_debug.yaml
 ```
 
 The visualization script reads `results/<experiment_name>/train_history.json` and writes an SVG figure to `figures/<experiment_name>/training_curves.svg`, which keeps the placeholder workflow dependency-light.
@@ -126,6 +195,8 @@ The visualization script reads `results/<experiment_name>/train_history.json` an
 Available starter configs:
 
 - `configs/pointnet2_modelnet40.yaml`
+- `configs/pointnet2_modelnet40_debug.yaml`
+- `configs/pointnet2_modelnet40_train.yaml`
 - `configs/dgcnn_modelnet40.yaml`
 - `configs/improved_pointnet2_modelnet40.yaml`
 - `configs/pointnet2_scanobjectnn.yaml`
@@ -142,7 +213,7 @@ Each config defines:
 
 ## Next Implementation Tasks
 
-1. Replace synthetic dataset generation with real dataset parsing.
-2. Implement full `PointNet++`, `DGCNN`, and improved `PointNet++` architectures.
-3. Add real augmentation, checkpoint resume support, and richer metrics.
+1. Implement the `ScanObjectNN` dataset pipeline.
+2. Implement full `DGCNN` and improved `PointNet++` architectures.
+3. Add checkpoint resume support and richer metrics.
 4. Expand visualization for confusion matrices, class-wise accuracy, and point cloud previews.

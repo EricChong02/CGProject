@@ -13,24 +13,34 @@ DATASET_REGISTRY = {
     "scanobjectnn": ScanObjectNNDataset,
 }
 
+SPLIT_ALIASES = {
+    "train": "train",
+    "test": "test",
+    "val": "test",
+    "eval": "test",
+}
+
 
 def build_dataset(config: dict, split: str):
     dataset_name = config["dataset"]["name"].lower()
     if dataset_name not in DATASET_REGISTRY:
         raise ValueError(f"Unsupported dataset: {dataset_name}")
-    return DATASET_REGISTRY[dataset_name](config=config, split=split)
+    normalized_split = SPLIT_ALIASES.get(split.lower(), split.lower())
+    return DATASET_REGISTRY[dataset_name](config=config, split=normalized_split)
 
 
 def build_dataloader(config: dict, split: str) -> DataLoader:
-    dataset = build_dataset(config=config, split=split)
+    normalized_split = SPLIT_ALIASES.get(split.lower(), split.lower())
+    dataset = build_dataset(config=config, split=normalized_split)
     training_cfg = config.get("training", {})
     evaluation_cfg = config.get("evaluation", {})
     batch_size = (
         training_cfg.get("batch_size", 8)
-        if split == "train"
+        if normalized_split == "train"
         else evaluation_cfg.get("batch_size", training_cfg.get("batch_size", 8))
     )
-    shuffle = split == "train"
+    shuffle = normalized_split == "train"
+    drop_last = training_cfg.get("drop_last", False) if normalized_split == "train" else False
 
     # TODO: Add a custom collate function for more advanced dataset outputs.
     return DataLoader(
@@ -38,5 +48,5 @@ def build_dataloader(config: dict, split: str) -> DataLoader:
         batch_size=batch_size,
         shuffle=shuffle,
         num_workers=training_cfg.get("num_workers", 0),
+        drop_last=drop_last,
     )
-

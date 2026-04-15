@@ -62,3 +62,4 @@ output:
   checkpoint_dir: checkpoints/pointnet2_modelnet40_debug
   result_dir: results/pointnet2_modelnet40_debug
   figure_dir: figures/pointnet2_modelnet40_debug
+

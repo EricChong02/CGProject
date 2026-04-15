@@ -1,4 +1,4 @@
-"""CLI entry point for placeholder training."""
+"""CLI entry point for training."""
 
 from __future__ import annotations
 
@@ -33,14 +33,27 @@ def main() -> None:
 
     log_file = Path(config["output"]["log_dir"]) / "train.log"
     logger = create_logger(config["experiment"]["name"], log_file)
-    logger.info("Starting placeholder training for %s", config["experiment"]["name"])
+    logger.info("Starting training for %s", config["experiment"]["name"])
 
     config_snapshot = Path(config["output"]["experiment_dir"]) / "config_snapshot.yaml"
     shutil.copy2(args.config, config_snapshot)
 
     device = torch.device(config["runtime"].get("device", "cpu"))
+    if device.type == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError(
+            "Config requested CUDA but no CUDA device is available. Set runtime.device to 'cpu' or enable CUDA."
+        )
     train_loader = build_dataloader(config, split="train")
     val_loader = build_dataloader(config, split="test")
+    if len(train_loader.dataset) == 0:
+        raise ValueError("Training dataset is empty. Check the ModelNet40 path and debug sample limits.")
+    if len(val_loader.dataset) == 0:
+        raise ValueError("Validation dataset is empty. Check the ModelNet40 path and debug sample limits.")
+    if len(train_loader) == 0:
+        raise ValueError(
+            "Training dataloader produced zero batches. "
+            "This can happen when training.drop_last=true and the dataset subset is smaller than batch_size."
+        )
     model = build_model(config)
 
     trainer = Trainer(
@@ -52,9 +65,13 @@ def main() -> None:
         logger=logger,
     )
     history = trainer.train()
-    logger.info("Finished training. Saved %d epochs of history.", len(history["train_loss"]))
+    logger.info(
+        "Finished training. Saved %d epochs of history. Best val_acc=%.4f at epoch=%s",
+        len(history["train_loss"]),
+        history["best_val_acc"],
+        history["best_epoch"],
+    )
 
 
 if __name__ == "__main__":
     main()
-

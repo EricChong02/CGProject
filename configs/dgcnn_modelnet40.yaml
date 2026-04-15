@@ -11,7 +11,25 @@ dataset:
   processed_root: datasets_processed/modelnet40
   num_points: 1024
   num_classes: 40
-  use_synthetic_data: true
+  normalize: true
+  upright_axis: y
+  augmentations:
+    random_point_dropout:
+      enabled: true
+      max_dropout_ratio: 0.875
+    random_scaling:
+      enabled: true
+      scale_low: 0.8
+      scale_high: 1.25
+    random_shifting:
+      enabled: true
+      shift_range: 0.1
+    gaussian_jitter:
+      enabled: true
+      sigma: 0.01
+      clip: 0.05
+    random_rotation_upright_axis:
+      enabled: false
 
 model:
   name: dgcnn
@@ -40,4 +58,3 @@ output:
   checkpoint_dir: checkpoints/dgcnn_modelnet40
   result_dir: results/dgcnn_modelnet40
   figure_dir: figures/dgcnn_modelnet40
-
