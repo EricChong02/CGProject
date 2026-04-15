@@ -1,0 +1,43 @@
+project:
+  name: pointcloud_benchmark
+
+experiment:
+  name: dgcnn_scanobjectnn
+  seed: 42
+
+dataset:
+  name: scanobjectnn
+  root: datasets_raw/scanobjectnn
+  processed_root: datasets_processed/scanobjectnn
+  num_points: 1024
+  num_classes: 15
+  use_synthetic_data: true
+
+model:
+  name: dgcnn
+  input_channels: 3
+  num_classes: 15
+
+training:
+  batch_size: 8
+  epochs: 2
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  num_workers: 0
+
+evaluation:
+  batch_size: 8
+
+visualization:
+  dpi: 150
+
+runtime:
+  device: cpu
+
+output:
+  experiment_dir: experiments/dgcnn_scanobjectnn
+  log_dir: logs/dgcnn_scanobjectnn
+  checkpoint_dir: checkpoints/dgcnn_scanobjectnn
+  result_dir: results/dgcnn_scanobjectnn
+  figure_dir: figures/dgcnn_scanobjectnn
+
