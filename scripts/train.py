@@ -45,10 +45,17 @@ def main() -> None:
         )
     train_loader = build_dataloader(config, split="train")
     val_loader = build_dataloader(config, split="test")
+    dataset_name = config["dataset"]["name"]
     if len(train_loader.dataset) == 0:
-        raise ValueError("Training dataset is empty. Check the ModelNet40 path and debug sample limits.")
+        raise ValueError(
+            f"Training dataset is empty for dataset={dataset_name!r}. "
+            "Check the dataset path and debug sample limits."
+        )
     if len(val_loader.dataset) == 0:
-        raise ValueError("Validation dataset is empty. Check the ModelNet40 path and debug sample limits.")
+        raise ValueError(
+            f"Validation dataset is empty for dataset={dataset_name!r}. "
+            "Check the dataset path and debug sample limits."
+        )
     if len(train_loader) == 0:
         raise ValueError(
             "Training dataloader produced zero batches. "

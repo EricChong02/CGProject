@@ -46,11 +46,14 @@ The repository already contains:
 - PyTorch environment and entry-point scripts
 - config, logs, checkpoints, results, figures, and experiments directories
 - a working `ModelNet40` dataset loader
+- a working `ScanObjectNN` dataset loader
 - a working `PointNet++` classification model
 - working train and evaluate scripts for the `PointNet++ + ModelNet40` path
+- working train and evaluate scripts for the `PointNet++ + ScanObjectNN` path
 
 Verified working pieces:
 - `ModelNet40` smoke test
+- `ScanObjectNN` smoke test
 - `PointNet++` forward smoke test
 - `PointNet++` training pipeline
 - `PointNet++` evaluation pipeline
@@ -61,10 +64,12 @@ Important current config files:
 - `configs/pointnet2_modelnet40_debug.yaml`
 - `configs/pointnet2_modelnet40_fast.yaml`
 - `configs/pointnet2_modelnet40_train.yaml`
+- `configs/pointnet2_scanobjectnn_debug.yaml`
+- `configs/pointnet2_scanobjectnn_fast.yaml`
+- `configs/pointnet2_scanobjectnn_train.yaml`
 
 Current known placeholders:
 - `pointcloud_benchmark/models/dgcnn.py`
-- `pointcloud_benchmark/datasets/scanobjectnn.py`
 - `pointcloud_benchmark/models/improved_pointnet2.py`
 
 ## 4. Current Baseline Evidence
@@ -303,7 +308,7 @@ Codex should treat the following as default project context for this repository:
 - [ ] real `DGCNN` implemented
 - [ ] `DGCNN` smoke test implemented
 - [ ] `DGCNN` train/eval path verified
-- [ ] real `ScanObjectNN` loader implemented
+- [x] real `ScanObjectNN` loader implemented
 - [ ] second-dataset experiment completed
 - [ ] improved or robust `PointNet++` variant implemented
 - [ ] presentation finalized
