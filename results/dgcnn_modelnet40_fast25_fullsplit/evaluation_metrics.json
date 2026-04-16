@@ -1,0 +1,5 @@
+{
+  "accuracy": 0.8703403472900391,
+  "dataset": "modelnet40",
+  "model": "dgcnn"
+}
