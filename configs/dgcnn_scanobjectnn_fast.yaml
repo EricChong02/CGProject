@@ -2,14 +2,14 @@ project:
   name: pointcloud_benchmark
 
 experiment:
-  name: dgcnn_scanobjectnn_fast_light
+  name: dgcnn_scanobjectnn_fast
   seed: 42
 
 dataset:
   name: scanobjectnn
   root: datasets_raw/scanobjectnn
   processed_root: datasets_processed/scanobjectnn
-  num_points: 512
+  num_points: 1024
   num_classes: 15
   normalize: true
   variant: pb_t50_rs
@@ -33,9 +33,6 @@ dataset:
       clip: 0.05
     random_rotation_upright_axis:
       enabled: false
-  debug:
-    max_train_samples: 4096
-    max_test_samples: 1024
 
 model:
   name: dgcnn
@@ -47,7 +44,7 @@ model:
 
 training:
   batch_size: 16
-  epochs: 6
+  epochs: 25
   learning_rate: 0.001
   weight_decay: 0.0001
   num_workers: 0
@@ -63,8 +60,8 @@ runtime:
   device: cpu
 
 output:
-  experiment_dir: experiments/dgcnn_scanobjectnn_fast_light
-  log_dir: logs/dgcnn_scanobjectnn_fast_light
-  checkpoint_dir: checkpoints/dgcnn_scanobjectnn_fast_light
-  result_dir: results/dgcnn_scanobjectnn_fast_light
-  figure_dir: figures/dgcnn_scanobjectnn_fast_light
+  experiment_dir: experiments/dgcnn_scanobjectnn_fast
+  log_dir: logs/dgcnn_scanobjectnn_fast
+  checkpoint_dir: checkpoints/dgcnn_scanobjectnn_fast
+  result_dir: results/dgcnn_scanobjectnn_fast
+  figure_dir: figures/dgcnn_scanobjectnn_fast
