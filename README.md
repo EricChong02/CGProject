@@ -262,8 +262,8 @@ Available starter configs:
 - `configs/pointnet2_scanobjectnn_fast.yaml`
 - `configs/pointnet2_scanobjectnn_fast_light.yaml`
 - `configs/pointnet2_scanobjectnn_train.yaml`
-- `configs/dgcnn_scanobjectnn.yaml`
-- `configs/dgcnn_scanobjectnn_fast_light.yaml`
+- `configs/dgcnn_scanobjectnn_test.yaml`
+- `configs/dgcnn_scanobjectnn_train.yaml`
 - `configs/improved_pointnet2_scanobjectnn.yaml`
 
 Each config defines:

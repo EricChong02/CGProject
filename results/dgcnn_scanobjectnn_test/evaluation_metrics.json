@@ -1,0 +1,5 @@
+{
+  "accuracy": 0.66015625,
+  "dataset": "scanobjectnn",
+  "model": "dgcnn"
+}
