@@ -2,7 +2,7 @@ project:
   name: pointcloud_benchmark
 
 experiment:
-  name: dgcnn_scanobjectnn_fast_light
+  name: dgcnn_scanobjectnn_test
   seed: 42
 
 dataset:
@@ -47,7 +47,7 @@ training:
   epochs: 6
   learning_rate: 0.001
   weight_decay: 0.0001
-  num_workers: 2
+  num_workers: 0
   drop_last: true
 
 evaluation:
@@ -60,8 +60,8 @@ runtime:
   device: cpu
 
 output:
-  experiment_dir: experiments/dgcnn_scanobjectnn_fast_light
-  log_dir: logs/dgcnn_scanobjectnn_fast_light
-  checkpoint_dir: checkpoints/dgcnn_scanobjectnn_fast_light
-  result_dir: results/dgcnn_scanobjectnn_fast_light
-  figure_dir: figures/dgcnn_scanobjectnn_fast_light
+  experiment_dir: experiments/dgcnn_scanobjectnn_test
+  log_dir: logs/dgcnn_scanobjectnn_test
+  checkpoint_dir: checkpoints/dgcnn_scanobjectnn_test
+  result_dir: results/dgcnn_scanobjectnn_test
+  figure_dir: figures/dgcnn_scanobjectnn_test

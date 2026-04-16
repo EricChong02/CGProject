@@ -2,19 +2,16 @@ project:
   name: pointcloud_benchmark
 
 experiment:
-  name: dgcnn_scanobjectnn
+  name: dgcnn_modelnet40_fast25_fullsplit
   seed: 42
 
 dataset:
-  name: scanobjectnn
-  root: datasets_raw/scanobjectnn
-  processed_root: datasets_processed/scanobjectnn
-  num_points: 1024
-  num_classes: 15
+  name: modelnet40
+  root: datasets_raw/modelnet40
+  processed_root: datasets_processed/modelnet40
+  num_points: 512
+  num_classes: 40
   normalize: true
-  variant: pb_t50_rs
-  split_name: main_split
-  filter_background_with_mask: false
   upright_axis: y
   augmentations:
     random_point_dropout:
@@ -33,21 +30,24 @@ dataset:
       clip: 0.05
     random_rotation_upright_axis:
       enabled: false
-
 model:
   name: dgcnn
   input_channels: 3
-  num_classes: 15
+  num_classes: 40
+  k: 20
+  emb_dims: 1024
+  dropout: 0.5
 
 training:
-  batch_size: 8
-  epochs: 2
+  batch_size: 16
+  epochs: 25
   learning_rate: 0.001
   weight_decay: 0.0001
   num_workers: 0
+  drop_last: true
 
 evaluation:
-  batch_size: 8
+  batch_size: 16
 
 visualization:
   dpi: 150
@@ -56,8 +56,8 @@ runtime:
   device: cpu
 
 output:
-  experiment_dir: experiments/dgcnn_scanobjectnn
-  log_dir: logs/dgcnn_scanobjectnn
-  checkpoint_dir: checkpoints/dgcnn_scanobjectnn
-  result_dir: results/dgcnn_scanobjectnn
-  figure_dir: figures/dgcnn_scanobjectnn
+  experiment_dir: experiments/dgcnn_modelnet40_fast25_fullsplit
+  log_dir: logs/dgcnn_modelnet40_fast25_fullsplit
+  checkpoint_dir: checkpoints/dgcnn_modelnet40_fast25_fullsplit
+  result_dir: results/dgcnn_modelnet40_fast25_fullsplit
+  figure_dir: figures/dgcnn_modelnet40_fast25_fullsplit
