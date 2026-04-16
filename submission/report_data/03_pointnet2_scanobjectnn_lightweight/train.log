@@ -1,0 +1,9 @@
+2026-04-16 12:05:44,308 | INFO | Starting training for pointnet2_scanobjectnn_fast_light
+2026-04-16 12:10:52,030 | INFO | Starting training for pointnet2_scanobjectnn_fast_light
+2026-04-16 12:27:46,452 | INFO | Epoch 1/6 | train_loss=1.2754 | train_acc=0.5403 | val_loss=1.1185 | val_acc=0.5811
+2026-04-16 12:41:49,475 | INFO | Epoch 2/6 | train_loss=1.0318 | train_acc=0.6086 | val_loss=0.9858 | val_acc=0.6523
+2026-04-16 12:50:44,792 | INFO | Epoch 3/6 | train_loss=0.9591 | train_acc=0.6377 | val_loss=1.0423 | val_acc=0.6250
+2026-04-16 12:58:47,714 | INFO | Epoch 4/6 | train_loss=0.8829 | train_acc=0.6719 | val_loss=0.8478 | val_acc=0.6953
+2026-04-16 13:06:49,516 | INFO | Epoch 5/6 | train_loss=0.8549 | train_acc=0.6890 | val_loss=0.7302 | val_acc=0.7344
+2026-04-16 13:14:51,338 | INFO | Epoch 6/6 | train_loss=0.8074 | train_acc=0.7063 | val_loss=0.6990 | val_acc=0.7422
+2026-04-16 13:14:51,429 | INFO | Finished training. Saved 6 epochs of history. Best val_acc=0.7422 at epoch=6

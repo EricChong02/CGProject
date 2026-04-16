@@ -1,0 +1,19 @@
+CS5182 submission result summary
+
+- PointNet++ on ModelNet40 fast: pointnet2_modelnet40_fast
+  final_eval_accuracy=0.8723663091659546
+  best_val_acc=0.8723663091659546, best_epoch=25
+
+- DGCNN on ModelNet40 fast: dgcnn_modelnet40_fast25_fullsplit
+  final_eval_accuracy=0.8703403472900391
+  best_val_acc=0.8703403472900391, best_epoch=25
+
+- PointNet++ on ScanObjectNN lightweight: pointnet2_scanobjectnn_fast_light
+  final_eval_accuracy=0.7412109375
+  best_val_acc=0.7421875, best_epoch=6
+  note=reduced subset, 4096 train / 1024 test
+
+- DGCNN on ScanObjectNN lightweight: dgcnn_scanobjectnn_test
+  final_eval_accuracy=0.66015625
+  best_val_acc=0.66015625, best_epoch=5
+  note=reduced subset, 4096 train / 1024 test

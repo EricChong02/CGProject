@@ -1,0 +1,70 @@
+project:
+  name: pointcloud_benchmark
+
+experiment:
+  name: dgcnn_scanobjectnn_debug
+  seed: 42
+
+dataset:
+  name: scanobjectnn
+  root: datasets_raw/scanobjectnn
+  processed_root: datasets_processed/scanobjectnn
+  num_points: 1024
+  num_classes: 15
+  normalize: true
+  variant: pb_t50_rs
+  split_name: main_split
+  filter_background_with_mask: false
+  upright_axis: y
+  augmentations:
+    random_point_dropout:
+      enabled: true
+      max_dropout_ratio: 0.875
+    random_scaling:
+      enabled: true
+      scale_low: 0.8
+      scale_high: 1.25
+    random_shifting:
+      enabled: true
+      shift_range: 0.1
+    gaussian_jitter:
+      enabled: true
+      sigma: 0.01
+      clip: 0.05
+    random_rotation_upright_axis:
+      enabled: false
+  debug:
+    max_train_samples: 32
+    max_test_samples: 16
+
+model:
+  name: dgcnn
+  input_channels: 3
+  num_classes: 15
+  k: 20
+  emb_dims: 1024
+  dropout: 0.5
+
+training:
+  batch_size: 4
+  epochs: 1
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  num_workers: 0
+  drop_last: true
+
+evaluation:
+  batch_size: 8
+
+visualization:
+  dpi: 150
+
+runtime:
+  device: cpu
+
+output:
+  experiment_dir: experiments/dgcnn_scanobjectnn_debug
+  log_dir: logs/dgcnn_scanobjectnn_debug
+  checkpoint_dir: checkpoints/dgcnn_scanobjectnn_debug
+  result_dir: results/dgcnn_scanobjectnn_debug
+  figure_dir: figures/dgcnn_scanobjectnn_debug

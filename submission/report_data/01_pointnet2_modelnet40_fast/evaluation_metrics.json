@@ -1,0 +1,5 @@
+{
+  "accuracy": 0.8723663091659546,
+  "dataset": "modelnet40",
+  "model": "pointnet2"
+}

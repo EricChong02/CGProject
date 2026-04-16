@@ -257,12 +257,17 @@ Available starter configs:
 - `configs/pointnet2_modelnet40_fast.yaml`
 - `configs/pointnet2_modelnet40_train.yaml`
 - `configs/dgcnn_modelnet40.yaml`
+- `configs/dgcnn_modelnet40_debug.yaml`
+- `configs/dgcnn_modelnet40_fast25.yaml`
+- `configs/dgcnn_modelnet40_train.yaml`
 - `configs/improved_pointnet2_modelnet40.yaml`
 - `configs/pointnet2_scanobjectnn.yaml`
 - `configs/pointnet2_scanobjectnn_debug.yaml`
 - `configs/pointnet2_scanobjectnn_fast.yaml`
 - `configs/pointnet2_scanobjectnn_fast_light.yaml`
 - `configs/pointnet2_scanobjectnn_train.yaml`
+- `configs/dgcnn_scanobjectnn_debug.yaml`
+- `configs/dgcnn_scanobjectnn_fast_light.yaml`
 - `configs/dgcnn_scanobjectnn_test.yaml`
 - `configs/dgcnn_scanobjectnn_train.yaml`
 - `configs/improved_pointnet2_scanobjectnn.yaml`
@@ -275,8 +280,33 @@ Each config defines:
 - training and evaluation hyperparameters
 - output directories
 
-## Next Implementation Tasks
+## Config Naming
 
-1. Implement the improved `PointNet++` architecture and any planned extension ideas.
-2. Add checkpoint resume support and richer metrics.
-3. Expand visualization for confusion matrices, class-wise accuracy, and point cloud previews.
+The project uses two naming layers:
+
+- repo-facing config and experiment names
+- report-facing experiment labels
+
+Repo-facing config families:
+
+- `debug`: smallest sanity-check runs
+- `fast` or `fast_light`: reduced-cost local-development runs
+- `train`: longer training configs
+- bare names like `pointnet2_modelnet40.yaml`, `pointnet2_scanobjectnn.yaml`, `dgcnn_modelnet40.yaml`, and `dgcnn_scanobjectnn.yaml`
+  - backward-compatible aliases of the corresponding `debug` setup
+
+Important result-linked exceptions:
+
+- `configs/dgcnn_modelnet40_fast25.yaml`
+  - kept because it matches the stored result artifact name `dgcnn_modelnet40_fast25_fullsplit`
+- `configs/dgcnn_scanobjectnn_test.yaml`
+  - kept because it matches the stored result artifact name `dgcnn_scanobjectnn_test`
+  - in the report/PPT, treat this run as the `DGCNN on ScanObjectNN lightweight` result
+
+## Final Status
+
+- This repository is kept as the final archived course-project state.
+- The final Canvas-ready package is organized under `submission/`.
+- The reported benchmark results are the four experiments summarized in `submission/results_txt/` and backed by `submission/report_data/`.
+- `PointNet++` and `DGCNN` are the completed report-facing methods in this repo.
+- `improved_pointnet2.py` remains an unfinished placeholder and is not used in the final report or PPT.

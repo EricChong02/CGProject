@@ -1,0 +1,25 @@
+DGCNN on ModelNet40 fast
+========================
+
+experiment_name: dgcnn_modelnet40_fast25_fullsplit
+config: submission/source/configs/dgcnn_modelnet40_fast25.yaml
+model: dgcnn
+dataset: modelnet40
+num_points: 512
+epochs: 25
+batch_size: 16
+runtime_device: cpu
+
+training_period_results:
+  final_train_loss: 0.5763992082600187
+  final_train_acc: 0.818089430894309
+  final_val_loss: 0.4271969281776991
+  final_val_acc: 0.8703403472900391
+  best_val_acc: 0.8703403472900391
+  best_epoch: 25
+  num_epochs_recorded: 25
+
+evaluation_period_results:
+  final_eval_accuracy: 0.8703403472900391
+
+report_data_dir: submission/report_data/02_dgcnn_modelnet40_fast

@@ -1,0 +1,26 @@
+PointNet++ on ScanObjectNN lightweight
+======================================
+
+experiment_name: pointnet2_scanobjectnn_fast_light
+config: submission/source/configs/pointnet2_scanobjectnn_fast_light.yaml
+model: pointnet2
+dataset: scanobjectnn
+num_points: 512
+epochs: 6
+batch_size: 16
+runtime_device: cpu
+subset_note: reduced subset with 4096 training samples and 1024 test samples
+
+training_period_results:
+  final_train_loss: 0.8074335716664791
+  final_train_acc: 0.706298828125
+  final_val_loss: 0.6990008025895804
+  final_val_acc: 0.7421875
+  best_val_acc: 0.7421875
+  best_epoch: 6
+  num_epochs_recorded: 6
+
+evaluation_period_results:
+  final_eval_accuracy: 0.7412109375
+
+report_data_dir: submission/report_data/03_pointnet2_scanobjectnn_lightweight

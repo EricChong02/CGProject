@@ -1,0 +1,32 @@
+2026-04-15 13:53:11,087 | INFO | Starting training for pointnet2_modelnet40_fast
+2026-04-15 14:36:19,355 | INFO | Epoch 1/25 | train_loss=2.2407 | train_acc=0.4127 | val_loss=1.7027 | val_acc=0.4951
+2026-04-15 15:00:43,633 | INFO | Starting training for pointnet2_modelnet40_fast
+2026-04-15 15:11:46,926 | INFO | Starting training for pointnet2_modelnet40_fast
+2026-04-15 15:13:13,482 | INFO | Starting training for pointnet2_modelnet40_fast
+2026-04-15 15:15:46,023 | INFO | Starting training for pointnet2_modelnet40_fast
+2026-04-15 15:37:13,932 | INFO | Epoch 1/25 | train_loss=2.2463 | train_acc=0.4073 | val_loss=1.8416 | val_acc=0.4417
+2026-04-15 15:59:08,218 | INFO | Epoch 2/25 | train_loss=1.6735 | train_acc=0.5361 | val_loss=1.3739 | val_acc=0.5956
+2026-04-15 16:21:29,001 | INFO | Epoch 3/25 | train_loss=1.4040 | train_acc=0.5994 | val_loss=1.2432 | val_acc=0.6195
+2026-04-15 16:45:12,183 | INFO | Epoch 4/25 | train_loss=1.2324 | train_acc=0.6391 | val_loss=1.0229 | val_acc=0.6807
+2026-04-15 17:09:20,882 | INFO | Epoch 5/25 | train_loss=1.1424 | train_acc=0.6620 | val_loss=0.8111 | val_acc=0.7407
+2026-04-15 17:32:48,992 | INFO | Epoch 6/25 | train_loss=1.0475 | train_acc=0.6841 | val_loss=0.8542 | val_acc=0.7306
+2026-04-15 17:52:39,863 | INFO | Epoch 7/25 | train_loss=0.9738 | train_acc=0.7124 | val_loss=0.6160 | val_acc=0.8071
+2026-04-15 18:11:58,028 | INFO | Epoch 8/25 | train_loss=0.9063 | train_acc=0.7279 | val_loss=0.6450 | val_acc=0.7938
+2026-04-15 18:31:38,381 | INFO | Epoch 9/25 | train_loss=0.8665 | train_acc=0.7407 | val_loss=0.7296 | val_acc=0.7707
+2026-04-15 18:50:09,097 | INFO | Epoch 10/25 | train_loss=0.8356 | train_acc=0.7439 | val_loss=0.7113 | val_acc=0.7618
+2026-04-15 19:08:36,025 | INFO | Epoch 11/25 | train_loss=0.7914 | train_acc=0.7581 | val_loss=0.5659 | val_acc=0.8140
+2026-04-15 19:27:19,863 | INFO | Epoch 12/25 | train_loss=0.7671 | train_acc=0.7622 | val_loss=0.5651 | val_acc=0.8169
+2026-04-15 19:46:26,105 | INFO | Epoch 13/25 | train_loss=0.7646 | train_acc=0.7658 | val_loss=0.5398 | val_acc=0.8274
+2026-04-15 20:05:09,258 | INFO | Epoch 14/25 | train_loss=0.7292 | train_acc=0.7746 | val_loss=0.5288 | val_acc=0.8363
+2026-04-15 20:24:26,378 | INFO | Epoch 15/25 | train_loss=0.7013 | train_acc=0.7823 | val_loss=0.4835 | val_acc=0.8363
+2026-04-15 20:43:24,600 | INFO | Epoch 16/25 | train_loss=0.6962 | train_acc=0.7842 | val_loss=0.5313 | val_acc=0.8310
+2026-04-15 21:02:36,843 | INFO | Epoch 17/25 | train_loss=0.6717 | train_acc=0.7917 | val_loss=0.5202 | val_acc=0.8262
+2026-04-15 21:21:21,472 | INFO | Epoch 18/25 | train_loss=0.6578 | train_acc=0.7952 | val_loss=0.4734 | val_acc=0.8541
+2026-04-15 21:39:51,591 | INFO | Epoch 19/25 | train_loss=0.6723 | train_acc=0.7869 | val_loss=0.4724 | val_acc=0.8408
+2026-04-15 21:58:30,635 | INFO | Epoch 20/25 | train_loss=0.6517 | train_acc=0.7937 | val_loss=0.4658 | val_acc=0.8452
+2026-04-15 22:20:58,694 | INFO | Epoch 21/25 | train_loss=0.6387 | train_acc=0.8007 | val_loss=0.5298 | val_acc=0.8209
+2026-04-15 22:40:14,981 | INFO | Epoch 22/25 | train_loss=0.6377 | train_acc=0.8017 | val_loss=0.5113 | val_acc=0.8298
+2026-04-15 22:59:32,943 | INFO | Epoch 23/25 | train_loss=0.6044 | train_acc=0.8139 | val_loss=0.4239 | val_acc=0.8549
+2026-04-15 23:19:04,975 | INFO | Epoch 24/25 | train_loss=0.6121 | train_acc=0.8053 | val_loss=0.4085 | val_acc=0.8707
+2026-04-15 23:39:16,037 | INFO | Epoch 25/25 | train_loss=0.6026 | train_acc=0.8088 | val_loss=0.4023 | val_acc=0.8724
+2026-04-15 23:39:16,165 | INFO | Finished training. Saved 25 epochs of history. Best val_acc=0.8724 at epoch=25

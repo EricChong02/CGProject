@@ -1,0 +1,7 @@
+2026-04-15 14:37:34,282 | INFO | Loaded checkpoint from checkpoints/pointnet2_modelnet40_fast/best.pt
+2026-04-15 14:41:00,860 | INFO | Saved evaluation metrics to results/pointnet2_modelnet40_fast/evaluation_metrics.json
+2026-04-15 14:41:00,864 | INFO | Evaluation accuracy: 0.4984
+2026-04-15 23:42:37,336 | INFO | Loaded checkpoint from checkpoints/pointnet2_modelnet40_fast/best.pt
+2026-04-15 23:43:25,760 | INFO | Loaded checkpoint from checkpoints/pointnet2_modelnet40_fast/best.pt
+2026-04-15 23:46:02,452 | INFO | Saved evaluation metrics to results/pointnet2_modelnet40_fast/evaluation_metrics.json
+2026-04-15 23:46:02,452 | INFO | Evaluation accuracy: 0.8724

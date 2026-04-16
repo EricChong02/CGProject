@@ -1,0 +1,26 @@
+DGCNN on ScanObjectNN lightweight
+=================================
+
+experiment_name: dgcnn_scanobjectnn_test
+config: submission/source/configs/dgcnn_scanobjectnn_test.yaml
+model: dgcnn
+dataset: scanobjectnn
+num_points: 512
+epochs: 6
+batch_size: 16
+runtime_device: cpu
+subset_note: reduced subset with 4096 training samples and 1024 test samples
+
+training_period_results:
+  final_train_loss: 0.9055797087494284
+  final_train_acc: 0.668701171875
+  final_val_loss: 0.9347018322441727
+  final_val_acc: 0.6396484375
+  best_val_acc: 0.66015625
+  best_epoch: 5
+  num_epochs_recorded: 6
+
+evaluation_period_results:
+  final_eval_accuracy: 0.66015625
+
+report_data_dir: submission/report_data/04_dgcnn_scanobjectnn_lightweight

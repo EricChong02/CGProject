@@ -1,0 +1,3 @@
+2026-04-16 13:14:53,437 | INFO | Loaded checkpoint from checkpoints/pointnet2_scanobjectnn_fast_light/best.pt
+2026-04-16 13:16:11,213 | INFO | Saved evaluation metrics to results/pointnet2_scanobjectnn_fast_light/evaluation_metrics.json
+2026-04-16 13:16:11,214 | INFO | Evaluation accuracy: 0.7412

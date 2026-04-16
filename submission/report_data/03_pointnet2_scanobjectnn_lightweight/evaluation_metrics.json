@@ -1,0 +1,5 @@
+{
+  "accuracy": 0.7412109375,
+  "dataset": "scanobjectnn",
+  "model": "pointnet2"
+}

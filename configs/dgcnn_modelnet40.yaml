@@ -2,7 +2,7 @@ project:
   name: pointcloud_benchmark
 
 experiment:
-  name: dgcnn_modelnet40
+  name: dgcnn_modelnet40_debug
   seed: 42
 
 dataset:
@@ -30,18 +30,25 @@ dataset:
       clip: 0.05
     random_rotation_upright_axis:
       enabled: false
+  debug:
+    max_train_samples: 32
+    max_test_samples: 16
 
 model:
   name: dgcnn
   input_channels: 3
   num_classes: 40
+  k: 20
+  emb_dims: 1024
+  dropout: 0.5
 
 training:
-  batch_size: 8
-  epochs: 2
+  batch_size: 4
+  epochs: 1
   learning_rate: 0.001
   weight_decay: 0.0001
   num_workers: 0
+  drop_last: true
 
 evaluation:
   batch_size: 8
@@ -53,8 +60,8 @@ runtime:
   device: cpu
 
 output:
-  experiment_dir: experiments/dgcnn_modelnet40
-  log_dir: logs/dgcnn_modelnet40
-  checkpoint_dir: checkpoints/dgcnn_modelnet40
-  result_dir: results/dgcnn_modelnet40
-  figure_dir: figures/dgcnn_modelnet40
+  experiment_dir: experiments/dgcnn_modelnet40_debug
+  log_dir: logs/dgcnn_modelnet40_debug
+  checkpoint_dir: checkpoints/dgcnn_modelnet40_debug
+  result_dir: results/dgcnn_modelnet40_debug
+  figure_dir: figures/dgcnn_modelnet40_debug

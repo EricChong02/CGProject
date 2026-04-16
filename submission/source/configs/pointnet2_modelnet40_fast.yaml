@@ -1,0 +1,61 @@
+project:
+  name: pointcloud_benchmark
+
+experiment:
+  name: pointnet2_modelnet40_fast
+  seed: 42
+
+dataset:
+  name: modelnet40
+  root: datasets_raw/modelnet40
+  processed_root: datasets_processed/modelnet40
+  num_points: 512
+  num_classes: 40
+  normalize: true
+  upright_axis: y
+  augmentations:
+    random_point_dropout:
+      enabled: true
+      max_dropout_ratio: 0.875
+    random_scaling:
+      enabled: true
+      scale_low: 0.8
+      scale_high: 1.25
+    random_shifting:
+      enabled: true
+      shift_range: 0.1
+    gaussian_jitter:
+      enabled: true
+      sigma: 0.01
+      clip: 0.05
+    random_rotation_upright_axis:
+      enabled: false
+
+model:
+  name: pointnet2
+  input_channels: 3
+  num_classes: 40
+
+training:
+  batch_size: 16
+  epochs: 25
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  num_workers: 2
+  drop_last: true
+
+evaluation:
+  batch_size: 16
+
+visualization:
+  dpi: 150
+
+runtime:
+  device: cpu
+
+output:
+  experiment_dir: experiments/pointnet2_modelnet40_fast
+  log_dir: logs/pointnet2_modelnet40_fast
+  checkpoint_dir: checkpoints/pointnet2_modelnet40_fast
+  result_dir: results/pointnet2_modelnet40_fast
+  figure_dir: figures/pointnet2_modelnet40_fast

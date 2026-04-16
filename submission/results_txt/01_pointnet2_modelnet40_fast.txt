@@ -1,0 +1,25 @@
+PointNet++ on ModelNet40 fast
+=============================
+
+experiment_name: pointnet2_modelnet40_fast
+config: submission/source/configs/pointnet2_modelnet40_fast.yaml
+model: pointnet2
+dataset: modelnet40
+num_points: 512
+epochs: 25
+batch_size: 16
+runtime_device: cpu
+
+training_period_results:
+  final_train_loss: 0.6025835296608568
+  final_train_acc: 0.8088414634146341
+  final_val_loss: 0.4022752228925062
+  final_val_acc: 0.8723663091659546
+  best_val_acc: 0.8723663091659546
+  best_epoch: 25
+  num_epochs_recorded: 25
+
+evaluation_period_results:
+  final_eval_accuracy: 0.8723663091659546
+
+report_data_dir: submission/report_data/01_pointnet2_modelnet40_fast
