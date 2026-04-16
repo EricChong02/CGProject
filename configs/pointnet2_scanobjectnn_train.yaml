@@ -2,7 +2,7 @@ project:
   name: pointcloud_benchmark
 
 experiment:
-  name: improved_pointnet2_scanobjectnn
+  name: pointnet2_scanobjectnn_train
   seed: 42
 
 dataset:
@@ -35,19 +35,20 @@ dataset:
       enabled: false
 
 model:
-  name: improved_pointnet2
+  name: pointnet2
   input_channels: 3
   num_classes: 15
 
 training:
-  batch_size: 8
-  epochs: 2
+  batch_size: 16
+  epochs: 100
   learning_rate: 0.001
   weight_decay: 0.0001
-  num_workers: 0
+  num_workers: 4
+  drop_last: true
 
 evaluation:
-  batch_size: 8
+  batch_size: 16
 
 visualization:
   dpi: 150
@@ -56,8 +57,8 @@ runtime:
   device: cpu
 
 output:
-  experiment_dir: experiments/improved_pointnet2_scanobjectnn
-  log_dir: logs/improved_pointnet2_scanobjectnn
-  checkpoint_dir: checkpoints/improved_pointnet2_scanobjectnn
-  result_dir: results/improved_pointnet2_scanobjectnn
-  figure_dir: figures/improved_pointnet2_scanobjectnn
+  experiment_dir: experiments/pointnet2_scanobjectnn_train
+  log_dir: logs/pointnet2_scanobjectnn_train
+  checkpoint_dir: checkpoints/pointnet2_scanobjectnn_train
+  result_dir: results/pointnet2_scanobjectnn_train
+  figure_dir: figures/pointnet2_scanobjectnn_train

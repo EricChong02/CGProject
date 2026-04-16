@@ -1,170 +1,325 @@
-# Project Master Plan
+# Unified Project Plan and Collaboration Context
 
-## 1. Course Project Requirements Summary
+## 1. Project Identity
 
-- Build a complete Computer Graphics course project around a clear technical topic.
-- Use a structured experimental workflow with reproducible training and evaluation.
-- Compare multiple methods rather than reporting a single model result.
-- Present implementation progress, experiments, analysis, and conclusions clearly.
-- Deliver both a written report and a presentation.
+This repository is a **CS5182 Computer Graphics course project** on **3D point cloud classification**.
 
-## 2. Selected Topic
+Core topic:
+- benchmark deep learning methods for point cloud object classification
+- build a reproducible training and evaluation pipeline
+- compare at least two methods
+- analyze performance, limitations, and generalization
+- prepare a presentation-first deliverable before the final written report
 
-**Point Cloud Classification**
+Current project direction:
+- baseline model: `PointNet++`
+- comparison model: `DGCNN`
+- second dataset target: `ScanObjectNN`
+- optional extension if time permits: a lightweight improved or robustness-oriented `PointNet++` variant
 
-Goal: benchmark and improve deep learning methods for 3D point cloud object classification.
+This file is the **single source of truth** for:
+- Member A and Member B collaboration
+- default project context for Codex
+- current project status and short-term execution plan
 
-## 3. Main Technical Route
+## 2. Delivery Strategy
 
-- Baseline: `PointNet++`
-- Comparison model: `DGCNN`
-- Second dataset: `ScanObjectNN`
-- Advanced method: `Robust Augmented PointNet++`
+The project must be **presentation-ready by 2026-04-17 19:00**.
 
-Working interpretation of the advanced method:
+Because training time is the main bottleneck, the working strategy is:
+- prioritize a stable and explainable baseline over ambitious extra features
+- finish a complete `PointNet++` path first
+- add `DGCNN` as the comparison method in parallel
+- treat the second dataset as required, but keep the implementation path pragmatic
+- avoid large refactors, speculative redesigns, and risky scope expansion before the pre
 
-- start from the `PointNet++` baseline
-- add stronger data augmentation and robustness-oriented training ideas
-- optionally add lightweight architectural improvements if time permits
+Minimum presentation-ready deliverable:
+- one fully working `PointNet++` pipeline on `ModelNet40`
+- one comparison method path for `DGCNN`, ideally with at least a first runnable result
+- one second-dataset analysis path, preferably `ScanObjectNN`
+- result tables, logs, checkpoints or metrics, and a clear explanation of limitations
 
-Note:
+## 3. Current Verified Repository Status
 
-- no full real model implementation is completed yet
-- the repository currently contains a runnable project skeleton with placeholders and TODOs
+The repository already contains:
+- modular project structure
+- PyTorch environment and entry-point scripts
+- config, logs, checkpoints, results, figures, and experiments directories
+- a working `ModelNet40` dataset loader
+- a working `ScanObjectNN` dataset loader
+- a working `PointNet++` classification model
+- working train and evaluate scripts for the `PointNet++ + ModelNet40` path
+- working train and evaluate scripts for the `PointNet++ + ScanObjectNN` path
 
-## 4. Planned Development Phases
+Verified working pieces:
+- `ModelNet40` smoke test
+- `ScanObjectNN` smoke test
+- `PointNet++` forward smoke test
+- `PointNet++` training pipeline
+- `PointNet++` evaluation pipeline
+- `debug` config
+- `fast` config
 
-### Phase 1: Project Scaffold
+Important current config files:
+- `configs/pointnet2_modelnet40_debug.yaml`
+- `configs/pointnet2_modelnet40_fast.yaml`
+- `configs/pointnet2_modelnet40_train.yaml`
+- `configs/pointnet2_scanobjectnn_debug.yaml`
+- `configs/pointnet2_scanobjectnn_fast.yaml`
+- `configs/pointnet2_scanobjectnn_train.yaml`
 
-- finalize modular directory structure
-- add configs, scripts, logging, checkpoints, results, and figures folders
-- make placeholder training, evaluation, and visualization commands runnable
+Current known placeholders:
+- `pointcloud_benchmark/models/dgcnn.py`
+- `pointcloud_benchmark/models/improved_pointnet2.py`
 
-### Phase 2: Dataset Pipeline
+## 4. Current Baseline Evidence
 
-- implement `ModelNet40` dataset loading
-- implement `ScanObjectNN` dataset loading
-- add preprocessing, normalization, point sampling, and basic augmentation
+Verified local baseline evidence on `2026-04-15` using:
+- config: `configs/pointnet2_modelnet40_fast.yaml`
+- model: `PointNet++`
+- dataset: `ModelNet40`
 
-### Phase 3: Baseline Models
+Observed verified outputs:
+- epoch 1 training completed successfully
+- checkpoint save path works
+- evaluation on saved checkpoint works
 
-- implement `PointNet++`
-- implement `DGCNN`
-- verify training and evaluation on `ModelNet40`
+Recorded metrics:
+- epoch 1 train loss: `2.2407`
+- epoch 1 train accuracy: `0.4127`
+- epoch 1 validation loss: `1.7027`
+- epoch 1 validation accuracy: `0.4951`
+- evaluation accuracy from `best.pt`: `0.4984`
 
-### Phase 4: Robust Advanced Method
+Artifacts verified to exist locally:
+- `checkpoints/pointnet2_modelnet40_fast/latest.pt`
+- `checkpoints/pointnet2_modelnet40_fast/best.pt`
+- `results/pointnet2_modelnet40_fast/evaluation_metrics.json`
 
-- design `Robust Augmented PointNet++`
-- test robustness-oriented augmentations
-- compare accuracy and stability against baselines
+Important note:
+- training artifacts are intentionally ignored by Git in `.gitignore`
+- do not claim longer training or stronger results than what has actually been run
 
-### Phase 5: Analysis and Deliverables
+## 5. Team Structure and Ownership
 
-- run final benchmark experiments
-- generate tables and figures
-- complete report and presentation materials
+### Member A
 
-## 5. Directory Structure Conventions
+Primary role:
+- baseline owner and project integrator
 
-- `pointcloud_benchmark/datasets/`: dataset classes and loaders
-- `pointcloud_benchmark/models/`: model definitions
-- `pointcloud_benchmark/training/`: training loops and training logic
-- `pointcloud_benchmark/evaluation/`: metrics and evaluation
-- `pointcloud_benchmark/visualization/`: plots and figure generation
-- `pointcloud_benchmark/utils/`: config, logging, seed, and I/O helpers
-- `configs/`: YAML experiment configs
-- `scripts/`: entry-point scripts for train, evaluate, and visualize
-- `datasets_raw/`: original downloaded datasets
-- `datasets_processed/`: cached or preprocessed dataset files
-- `experiments/`: config snapshots and experiment metadata
-- `logs/`: training and evaluation logs
-- `checkpoints/`: saved model weights
-- `results/`: metrics and exported JSON results
-- `figures/`: plots for analysis and report writing
+Main responsibilities:
+1. `PointNet++` baseline
+2. main experiment pipeline
+3. baseline training and evaluation
+4. paper reading and method understanding
+5. report main structure
+6. final result integration
+7. main presentation storyline
 
-## 6. Experiment Plan
+Primary ownership:
+- `configs/pointnet2_*`
+- `pointcloud_benchmark/models/pointnet2.py`
+- baseline experiment interpretation
+- report main logic
 
-### Core comparisons
+### Member B
 
+Primary role:
+- comparison-method owner and support contributor
+
+Main responsibilities:
+1. `DGCNN` implementation
+2. `DGCNN` smoke test
+3. `DGCNN` train and evaluate integration
+4. `DGCNN` debug and fast configs
+5. comparison results and tables
+6. support for figures, PPT, and comparison writeup
+
+Primary ownership:
+- `pointcloud_benchmark/models/dgcnn.py`
+- `configs/dgcnn_*`
+- `DGCNN` smoke tests and comparison outputs
+
+## 6. Branch Strategy
+
+Stable branch:
+- `main`
+
+Feature branches:
+- `feat/pointnet2-baseline`: Member A working branch
+- `feat/dgcnn-compare`: Member B working branch
+
+Branch rules:
+- do not develop directly on `main`
+- all new work should happen on feature branches
+- merge to `main` only after the relevant smoke test or train/evaluate path is confirmed working
+- keep PointNet++ baseline work isolated from DGCNN comparison work when possible
+
+Recommended workflow:
+1. Member A stabilizes and pushes `feat/pointnet2-baseline`
+2. Member B branches from the latest stable baseline commit into `feat/dgcnn-compare`
+3. shared files are edited minimally and carefully
+4. merge to `main` only after both sides have a stable checkpointed milestone
+
+## 7. Shared Files and Collaboration Rules
+
+Shared files that require extra care:
+- `pointcloud_benchmark/training/trainer.py`
+- `pointcloud_benchmark/datasets/builder.py`
+- `pointcloud_benchmark/models/builder.py`
+- `README.md`
+
+Rules for shared files:
+- keep changes minimal
+- do not break the working `PointNet++` path
+- do not remove existing configs
+- do not rename important paths during the sprint
+- if a shared change is needed, prefer the smallest robust fix
+
+Project-wide rules:
+- preserve current project structure
+- avoid uncontrolled refactors
+- prefer incremental, testable changes
+- do not make fake claims about training, accuracy, or completeness
+- prioritize presentation-ready deliverables over ambitious extra engineering
+
+## 8. Immediate Execution Plan
+
+### Member A immediate plan
+
+Priority order:
+1. preserve the working `PointNet++` baseline branch
+2. run longer `fast` training when compute is available
+3. collect baseline metrics, logs, checkpoints, and curves
+4. prepare comparison against the PointNet++ paper
+5. write the baseline section for the pre and final report
+
+### Member B immediate plan
+
+Priority order:
+1. implement real `DGCNN`
+2. add a `DGCNN` smoke test
+3. connect `DGCNN` to the existing training and evaluation pipeline
+4. create `DGCNN` debug and fast configs
+5. produce a first comparison result on `ModelNet40`
+
+### Joint immediate plan before the pre
+
+Must finish:
+- one stable baseline path
+- one comparison path
+- one presentation-ready explanation of task, dataset, method, and results
+- one limitations slide
+- one team-contribution explanation
+
+Should finish if possible:
+- second dataset experiment or at least a credible external reproduction and analysis path
+- training curves and result figures
+- concise comparison table
+
+Can be deferred if needed:
+- improved or robust PointNet++ variant
+- richer visualization features
+- broader refactors or cleanup
+
+## 9. Experiment Plan
+
+### Required comparison line
+
+Primary experiments:
 - `PointNet++` on `ModelNet40`
 - `DGCNN` on `ModelNet40`
+
+Second-dataset target:
 - `PointNet++` on `ScanObjectNN`
 - `DGCNN` on `ScanObjectNN`
-- `Robust Augmented PointNet++` on both datasets
+
+Fallback rule for the second dataset:
+- if a full in-repo `ScanObjectNN` path is not ready in time, use a credible external implementation or reference result and clearly label the source in the presentation
 
 ### Main metrics
 
 - overall classification accuracy
-- mean class accuracy
+- validation accuracy
 - training stability
-- robustness under augmentation or noise settings
+- comparison to reported paper performance
+- qualitative discussion of failure cases and limitations
 
 ### Controlled variables
 
 - same train/test split protocol per dataset
-- matched number of points when possible
-- consistent optimizer and training budget for fair comparison
+- matched point count when feasible
+- consistent training budget where fair comparison is possible
+- explicit reporting of any mismatched conditions
 
-## 7. Report Plan
+## 10. Report and Presentation Structure
 
-Suggested sections:
-
+Recommended report sections:
 1. Introduction
-2. Background and related methods
-3. Datasets and preprocessing
-4. Methodology
+2. Task definition and motivation
+3. Dataset and preprocessing
+4. Methods
 5. Experimental setup
 6. Results and comparison
-7. Robustness analysis
+7. Limitations and failure analysis
 8. Conclusion and future work
 
-Planned report outputs:
+Recommended presentation flow:
+1. project topic and motivation
+2. problem definition and dataset
+3. baseline method: `PointNet++`
+4. comparison method: `DGCNN`
+5. implementation progress and pipeline
+6. experiment results
+7. limitations, lessons learned, and next steps
 
-- method overview diagram
-- experiment table
-- accuracy comparison plots
-- qualitative or robustness visualization if useful
+Presentation style target:
+- short
+- visual
+- honest about scope and status
+- focused on decisions, experiments, and results rather than excessive code detail
 
-## 8. Presentation Plan
+## 11. Default Codex Instructions
 
-- motivation and problem statement
-- why point clouds are challenging
-- method lineup: `PointNet++`, `DGCNN`, and robust improved method
-- datasets used
-- benchmark setup
-- key results and visualizations
-- lessons learned and future improvements
+Codex should treat the following as default project context for this repository:
 
-Target style:
+1. prioritize Member A's `PointNet++` baseline line unless the user explicitly switches focus
+2. do not distract Member A into `DGCNN` work unless asked
+3. preserve collaboration compatibility with Member B
+4. keep configs clear: `debug`, `fast`, and `full-train`
+5. avoid large risky refactors
+6. prefer minimal, robust, testable changes
+7. do not invent training results or pretend unfinished work is complete
+8. when editing shared files, be conservative and protect the working baseline path
+9. optimize for presentation-ready progress under time pressure
 
-- short and visual
-- focus on comparisons and project decisions
-- include one slide on implementation progress and one slide on limitations
+## 12. Current Status Checklist
 
-## 9. Current Status Checklist
-
-- [x] Modular PyTorch project structure created
-- [x] Placeholder training, evaluation, and visualization scripts created
-- [x] Initial YAML config files added for all planned model and dataset combinations
-- [x] Output directories for logs, checkpoints, results, figures, and experiments added
+- [x] modular project structure created
+- [x] output directories and experiment folders created
 - [x] README, requirements, and gitignore added
-- [ ] Real `ModelNet40` loader implemented
-- [ ] Real `ScanObjectNN` loader implemented
-- [ ] Real `PointNet++` implemented
-- [ ] Real `DGCNN` implemented
-- [ ] Real `Robust Augmented PointNet++` implemented
-- [ ] Final experiments completed
-- [ ] Report drafted
-- [ ] Presentation slides drafted
+- [x] `ModelNet40` loader implemented
+- [x] real `PointNet++` implemented
+- [x] `ModelNet40` smoke test passes
+- [x] `PointNet++` forward smoke test passes
+- [x] `PointNet++` training path verified
+- [x] `PointNet++` evaluation path verified
+- [x] `pointnet2_modelnet40_fast.yaml` added and validated
+- [ ] real `DGCNN` implemented
+- [ ] `DGCNN` smoke test implemented
+- [ ] `DGCNN` train/eval path verified
+- [x] real `ScanObjectNN` loader implemented
+- [ ] second-dataset experiment completed
+- [ ] improved or robust `PointNet++` variant implemented
+- [ ] presentation finalized
+- [ ] final report drafted
 
-## 10. Pending Tasks
+## 13. Canonical Usage Note
 
-- implement actual dataset loading and preprocessing
-- implement baseline `PointNet++`
-- implement comparison `DGCNN`
-- define and implement `Robust Augmented PointNet++`
-- add richer evaluation metrics and plots
-- run benchmark experiments on both datasets
-- summarize findings for the report
-- prepare final presentation slides
+Use this file as the default project context for:
+- project planning
+- team coordination
+- task delegation
+- future Codex sessions in this repository
 
+If future plans change, update this file first so both human collaborators and AI collaborators stay aligned.
