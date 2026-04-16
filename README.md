@@ -9,7 +9,8 @@ This repository is intentionally scaffolded as an initial course-project codebas
 - The `ModelNet40` loader now supports the common h5 format used by PointNet-family projects.
 - The `ScanObjectNN` loader now supports the official h5 release layout.
 - A real `PointNet++` classification model is implemented for the current pipeline.
-- `DGCNN` and the improved `PointNet++` path are still placeholders with `TODO` markers.
+- A real `DGCNN` classification model is implemented for the current pipeline.
+- The improved `PointNet++` path is still a placeholder with `TODO` markers.
 
 ## Project Structure
 
@@ -235,7 +236,7 @@ python scripts/evaluate.py \
   --checkpoint checkpoints/pointnet2_modelnet40_train/latest.pt
 ```
 
-The current evaluator works with the real `PointNet++` + `ModelNet40` and `PointNet++` + `ScanObjectNN` paths. Metrics for placeholder model paths are not meaningful yet.
+The current evaluator works with the real `PointNet++` and `DGCNN` classification paths. Metrics for placeholder model paths are not meaningful yet.
 
 ## Visualization
 
@@ -276,6 +277,6 @@ Each config defines:
 
 ## Next Implementation Tasks
 
-1. Implement full `DGCNN` and improved `PointNet++` architectures.
+1. Implement the improved `PointNet++` architecture and any planned extension ideas.
 2. Add checkpoint resume support and richer metrics.
 3. Expand visualization for confusion matrices, class-wise accuracy, and point cloud previews.
