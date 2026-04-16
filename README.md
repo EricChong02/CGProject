@@ -7,8 +7,10 @@ This repository is intentionally scaffolded as an initial course-project codebas
 - The project structure is modular and ready to extend.
 - Dataset, model, training, evaluation, and visualization modules are wired together.
 - The `ModelNet40` loader now supports the common h5 format used by PointNet-family projects.
+- The `ScanObjectNN` loader now supports the official h5 release layout.
 - A real `PointNet++` classification model is implemented for the current pipeline.
-- `DGCNN`, `ScanObjectNN`, and the improved `PointNet++` path are still placeholders with `TODO` markers.
+- A real `DGCNN` classification model is implemented for the current pipeline.
+- The improved `PointNet++` path is still a placeholder with `TODO` markers.
 
 ## Project Structure
 
@@ -124,7 +126,51 @@ This constructs the model and runs random input of shape `[B, N, 3]` through the
 
 ### ScanObjectNN
 
-`ScanObjectNN` is not implemented yet and remains a placeholder.
+The loader supports the official h5 release used in the ICCV 2019 benchmark. The recommended directory tree is:
+
+```text
+datasets_raw/
+└── scanobjectnn/
+    └── h5_files/
+        └── main_split/
+            ├── training_objectdataset_augmentedrot_scale75.h5
+            ├── test_objectdataset_augmentedrot_scale75.h5
+            ├── training_objectdataset_augmentedrot.h5
+            ├── test_objectdataset_augmentedrot.h5
+            └── ...
+```
+
+`root` in the config should usually remain:
+
+```yaml
+dataset:
+  root: datasets_raw/scanobjectnn
+  split_name: main_split
+  variant: pb_t50_rs
+```
+
+Supported variant keys:
+
+- `obj_bg`
+- `obj_only`
+- `pb_t25`
+- `pb_t25_r`
+- `pb_t50_r`
+- `pb_t50_rs`
+
+Current ScanObjectNN features:
+
+- automatic detection of `main_split/` and `h5_files/main_split/` layouts
+- support for the official h5 naming convention
+- configurable point sampling and normalization
+- optional foreground-only filtering using the released `mask` field
+- the same training-time augmentations used by the current ModelNet40 pipeline
+
+To sanity-check the ScanObjectNN dataloader:
+
+```bash
+python scripts/smoke_test_scanobjectnn.py --config configs/pointnet2_scanobjectnn_debug.yaml
+```
 
 ## Training
 
@@ -132,7 +178,12 @@ Example training runs:
 
 ```bash
 python scripts/train.py --config configs/pointnet2_modelnet40_debug.yaml
+python scripts/train.py --config configs/pointnet2_modelnet40_fast.yaml
 python scripts/train.py --config configs/pointnet2_modelnet40_train.yaml
+python scripts/train.py --config configs/pointnet2_scanobjectnn_debug.yaml
+python scripts/train.py --config configs/pointnet2_scanobjectnn_fast.yaml
+python scripts/train.py --config configs/pointnet2_scanobjectnn_fast_light.yaml
+python scripts/train.py --config configs/pointnet2_scanobjectnn_train.yaml
 ```
 
 What the current training pipeline does:
@@ -147,8 +198,15 @@ Note:
 
 - `configs/pointnet2_modelnet40_debug.yaml` is the explicit lightweight sanity-check config
 - it uses a small subset of `ModelNet40`, batch size `4`, and `1` epoch so the first real run stays fast
+- `configs/pointnet2_modelnet40_fast.yaml` is a full-split local-development baseline
+- it keeps the full `ModelNet40` train/test split, but reduces runtime with `512` points per shape and `25` epochs
 - `configs/pointnet2_modelnet40_train.yaml` is the real baseline training config for full-split experiments
 - `configs/pointnet2_modelnet40.yaml` remains as a backward-compatible alias of the debug setup
+- `configs/pointnet2_scanobjectnn_debug.yaml` is the lightweight ScanObjectNN sanity-check config
+- `configs/pointnet2_scanobjectnn_fast.yaml` is the local-development ScanObjectNN config
+- `configs/pointnet2_scanobjectnn_fast_light.yaml` is a local-compute ScanObjectNN config tuned for a same-day result on weaker machines
+- `configs/pointnet2_scanobjectnn_train.yaml` is the longer ScanObjectNN baseline config
+- `configs/pointnet2_scanobjectnn.yaml` remains as a backward-compatible alias of the debug setup
 
 Generated artifacts are written to:
 
@@ -178,7 +236,7 @@ python scripts/evaluate.py \
   --checkpoint checkpoints/pointnet2_modelnet40_train/latest.pt
 ```
 
-The current evaluator works with the real `PointNet++` + `ModelNet40` path. Metrics for other placeholder model paths are not meaningful yet.
+The current evaluator works with the real `PointNet++` and `DGCNN` classification paths. Metrics for placeholder model paths are not meaningful yet.
 
 ## Visualization
 
@@ -196,11 +254,17 @@ Available starter configs:
 
 - `configs/pointnet2_modelnet40.yaml`
 - `configs/pointnet2_modelnet40_debug.yaml`
+- `configs/pointnet2_modelnet40_fast.yaml`
 - `configs/pointnet2_modelnet40_train.yaml`
 - `configs/dgcnn_modelnet40.yaml`
 - `configs/improved_pointnet2_modelnet40.yaml`
 - `configs/pointnet2_scanobjectnn.yaml`
-- `configs/dgcnn_scanobjectnn.yaml`
+- `configs/pointnet2_scanobjectnn_debug.yaml`
+- `configs/pointnet2_scanobjectnn_fast.yaml`
+- `configs/pointnet2_scanobjectnn_fast_light.yaml`
+- `configs/pointnet2_scanobjectnn_train.yaml`
+- `configs/dgcnn_scanobjectnn_test.yaml`
+- `configs/dgcnn_scanobjectnn_train.yaml`
 - `configs/improved_pointnet2_scanobjectnn.yaml`
 
 Each config defines:
@@ -213,7 +277,6 @@ Each config defines:
 
 ## Next Implementation Tasks
 
-1. Implement the `ScanObjectNN` dataset pipeline.
-2. Implement full `DGCNN` and improved `PointNet++` architectures.
-3. Add checkpoint resume support and richer metrics.
-4. Expand visualization for confusion matrices, class-wise accuracy, and point cloud previews.
+1. Implement the improved `PointNet++` architecture and any planned extension ideas.
+2. Add checkpoint resume support and richer metrics.
+3. Expand visualization for confusion matrices, class-wise accuracy, and point cloud previews.

@@ -73,7 +73,10 @@ def main() -> None:
 
     dataloader = build_dataloader(config, split="test")
     if len(dataloader.dataset) == 0:
-        raise ValueError("Evaluation dataset is empty. Check the ModelNet40 path and debug sample limits.")
+        raise ValueError(
+            f"Evaluation dataset is empty for dataset={config['dataset']['name']!r}. "
+            "Check the dataset path and debug sample limits."
+        )
     model = build_model(config)
     checkpoint_path = resolve_checkpoint_path(config, args.checkpoint)
     load_checkpoint(model, checkpoint_path, logger)
